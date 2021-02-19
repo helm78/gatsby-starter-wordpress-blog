@@ -6,10 +6,7 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-const BlogIndex = ({
-  data,
-  pageContext: { nextPagePath, previousPagePath },
-}) => {
+const BlogIndex = ({ data, pageContext: { nextPagePath, previousPagePath } }) => {
   const posts = data.allWpPost.nodes
 
   if (!posts.length) {
@@ -17,10 +14,7 @@ const BlogIndex = ({
       <Layout isHomePage>
         <SEO title="All posts" />
         <Bio />
-        <p>
-          No blog posts found. Add posts to your WordPress site and they'll
-          appear here!
-        </p>
+        <p>No blog posts found. Add posts to your WordPress site and they'll appear here!</p>
       </Layout>
     )
   }
@@ -37,11 +31,7 @@ const BlogIndex = ({
 
           return (
             <li key={post.uri}>
-              <article
-                className="post-list-item"
-                itemScope
-                itemType="http://schema.org/Article"
-              >
+              <article className="post-list-item" itemScope itemType="http://schema.org/Article">
                 <header>
                   <h2>
                     <Link to={post.uri} itemProp="url">
@@ -51,6 +41,8 @@ const BlogIndex = ({
                   <small>{post.date}</small>
                 </header>
                 <section itemProp="description">{parse(post.excerpt)}</section>
+                {post.storytelling.title}
+                <div dangerouslySetInnerHTML={{__html:post.storytelling.description}}/>
               </article>
             </li>
           )
@@ -72,17 +64,17 @@ export default BlogIndex
 
 export const pageQuery = graphql`
   query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
-    allWpPost(
-      sort: { fields: [date], order: DESC }
-      limit: $postsPerPage
-      skip: $offset
-    ) {
+    allWpPost(sort: { fields: [date], order: DESC }, limit: $postsPerPage, skip: $offset) {
       nodes {
         excerpt
         uri
         date(formatString: "MMMM DD, YYYY")
         title
         excerpt
+        storytelling {
+          title
+          description
+        }
       }
     }
   }
