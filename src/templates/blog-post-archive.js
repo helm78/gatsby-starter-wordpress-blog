@@ -41,8 +41,8 @@ const BlogIndex = ({ data, pageContext: { nextPagePath, previousPagePath } }) =>
                   <small>{post.date}</small>
                 </header>
                 <section itemProp="description">{parse(post.excerpt)}</section>
-                {/* {post.storytelling.title}
-                <div dangerouslySetInnerHTML={{__html:post.storytelling.description}}/> */}
+                <h3>{post.storytelling.title}</h3>
+                <div dangerouslySetInnerHTML={{__html:post.storytelling.description}}/>
               </article>
             </li>
           )
@@ -71,10 +71,10 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         title
         excerpt
-        # storytelling {
-        #   title
-        #   description
-        # }
+        storytelling {
+          title
+          description
+        }
       }
     }
   }
