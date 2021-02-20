@@ -21,29 +21,17 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
     <Layout>
       <SEO title={post.title} description={post.excerpt} />
 
-      <article
-        className="blog-post"
-        itemScope
-        itemType="http://schema.org/Article"
-      >
+      <article className="blog-post" itemScope itemType="http://schema.org/Article">
         <header>
           <h1 itemProp="headline">{parse(post.title)}</h1>
 
           <p>{post.date}</p>
 
           {/* if we have a featured image for this post let's display it */}
-          {featuredImage?.fluid && (
-            <Image
-              fluid={featuredImage.fluid}
-              alt={featuredImage.alt}
-              style={{ marginBottom: 50 }}
-            />
-          )}
+          {featuredImage?.fluid && <Image fluid={featuredImage.fluid} alt={featuredImage.alt} style={{ marginBottom: 50 }} />}
         </header>
 
-        {!!post.content && (
-          <section itemProp="articleBody">{parse(post.content)}</section>
-        )}
+        {!!post.content && <section itemProp="articleBody">{parse(post.content)}</section>}
 
         <hr />
 
@@ -79,6 +67,10 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
           </li>
         </ul>
       </nav>
+      <div style={{ color: "green" }}>
+        <h3 style={{ color: "green" }}>{post.storytelling.title}</h3>
+        <div dangerouslySetInnerHTML={{ __html: post.storytelling.description }} />
+      </div>
     </Layout>
   )
 }
@@ -99,6 +91,10 @@ export const pageQuery = graphql`
       content
       title
       date(formatString: "MMMM DD, YYYY")
+      storytelling {
+        title
+        description
+      }
 
       featuredImage {
         node {
