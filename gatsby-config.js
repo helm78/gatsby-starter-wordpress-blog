@@ -26,9 +26,15 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         // the only required plugin option for WordPress is the GraphQL url.
-        url:
-          process.env.WPGRAPHQL_URL ||
-          `http://gatsby-blog.grupow.io/wp/graphql/`,
+        url: process.env.WPGRAPHQL_URL || `http://gatsby-blog.grupow.io/wp/graphql/`,
+        develop: {
+          hardCacheData: false,
+        },
+        debug: {
+          graphql: {
+            writeQueriesToDisk: true,
+          },
+        },
       },
     },
 

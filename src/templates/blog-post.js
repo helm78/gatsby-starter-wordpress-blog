@@ -33,12 +33,18 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
 
         {!!post.content && <section itemProp="articleBody">{parse(post.content)}</section>}
 
-        <hr />
+        <div style={{ color: "green" }}>
+          <h2 style={{ color: "blue" }}>Here is going to be my Storytelling:</h2>
+          <h3 style={{ color: "green" }}>{post.storytelling.title}</h3>
+          <div dangerouslySetInnerHTML={{ __html: post.storytelling.description }} />
+        </div>
 
         <footer>
           <Bio />
         </footer>
       </article>
+      
+      <hr />
 
       <nav className="blog-post-nav">
         <ul
@@ -67,10 +73,6 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
           </li>
         </ul>
       </nav>
-      <div style={{ color: "green" }}>
-        <h3 style={{ color: "green" }}>{post.storytelling.title}</h3>
-        <div dangerouslySetInnerHTML={{ __html: post.storytelling.description }} />
-      </div>
     </Layout>
   )
 }
